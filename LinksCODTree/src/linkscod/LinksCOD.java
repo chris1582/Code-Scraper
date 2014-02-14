@@ -20,13 +20,15 @@ public class LinksCOD {
     public static void main(String[] args){
         
         FindLinks fl = new FindLinks();
-        fl.findAllLinks(0, "http://library.municode.com/toc.aspx?clientId=10620&checks=false");
+        fl.findAllLinks(0,"http://library.municode.com/HTML/10620/book.html");
         SortedSet<String> list = fl.getTree();
+        int count = 0;
         for (String link : list)
         {
             System.out.println(link);
+            count++;
         }
-
+        System.out.println(count);
         
     }
 

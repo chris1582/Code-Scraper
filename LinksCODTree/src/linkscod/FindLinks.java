@@ -4,6 +4,7 @@
  */
 package linkscod;
 
+import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.jsoup.Jsoup;
@@ -16,41 +17,39 @@ import org.jsoup.select.Elements;
  * @author Cristhian
  */
 public class FindLinks {
-    
+    int level;
 SortedSet<String> linkset = new TreeSet<String>(new LinkComaprator<String>());
-    public void findAllLinks(int level, String l)
+
+    public void findAllLinks(int lvl, String l)
     {
-        //String url = "http://library.municode.com/toc.aspx?clientId=10620&checks=false";
-        //print("Fetching %s...", url);
-        try{
-        Document doc = Jsoup.connect(l).get();
-        Elements links = doc.select("a[href]");
-        
-
-
-        
-        if (level < 5){
-        for (Element link : links) {
-            
-           // print( link.attr("abs:href"));
-           // System.out.println(link.attr("abs:href"));
-            linkset.add(link.attr("abs:href"));
-          //  findAllLinks(level+1, link.attr("abs:href"));
-            
-        }
-        for (String lin : linkset)
+        level = lvl;
+        try
         {
-            //System.out.println("level= "+level + " "+ lin );
-            findAllLinks(level+1, lin);
-        }
-        }
-        
-        
+
+                    String url = l;
+                    Document doc = Jsoup.connect(url).get();
+                    Elements links = doc.select("a[href]");
+                
+                    for (Element link : links) 
+                    {
+                        if (!link.attr("abs:href").contains("#") && !link.attr("abs:href").isEmpty() && !link.attr("abs:href").contains(".png"))
+                        {
+                            if (!linkset.contains(link.attr("abs:href"))){
+                                 linkset.add(link.attr("abs:href"));
+                                // System.out.println(link.attr("abs:href"));
+                                  findAllLinks(level++,link.attr("abs:href"));
+                            }
+                            
+                        }
+                        
+                    }
+
         }catch(Exception e)
         {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
+    
     public SortedSet<String> getTree()
     {
         return linkset;

@@ -16,7 +16,7 @@ import java.io.IOException;
 public class LinksCOD {
     public static void main(String[] args) throws IOException {
         
-        String url = "http://library.municode.com/toc.aspx?clientId=10620&checks=false";
+        String url = "http://library.municode.com/HTML/10620/level2/PTIIICOOR_CH2AD.html";
         print("Fetching %s...", url);
 
         Document doc = Jsoup.connect(url).get();
@@ -24,22 +24,8 @@ public class LinksCOD {
         Elements media = doc.select("[src]");
         Elements imports = doc.select("link[href]");
 
-//        print("\nMedia: (%d)", media.size());
-//        for (Element src : media) {
-//            if (src.tagName().equals("img"))
-//                print(" * %s: <%s> %sx%s (%s)",
-//                        src.tagName(), src.attr("abs:src"), src.attr("width"), src.attr("height"),
-//                        trim(src.attr("alt"), 20));
-//            else
-//                print(" * %s: <%s>", src.tagName(), src.attr("abs:src"));
-//        }
-//
-//        print("\nImports: (%d)", imports.size());
-//        for (Element link : imports) {
-//            print(link.attr("abs:href"), link.attr("rel"));
-//        }
-//
-//        print("\nLinks: (%d)", links.size());
+
+        print("\nLinks: (%d)", links.size());
         for (Element link : links) {
             print( link.attr("abs:href"));
         }
